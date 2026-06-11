@@ -142,6 +142,9 @@ const elements = {
   guideTitle: document.getElementById("guideTitle"),
   guideDescription: document.getElementById("guideDescription"),
   levelTrack: document.querySelector(".level-track"),
+  difficultySelect: document.getElementById("difficultySelect"),
+  difficultyMode: document.getElementById("difficultyMode"),
+  difficultyHelp: document.getElementById("difficultyHelp"),
   resetButton: document.getElementById("resetButton")
 };
 
@@ -163,6 +166,7 @@ function principal(key, display, input) {
 function createInitialState() {
   return {
     level: 1,
+    difficultyMode: "auto",
     correct: 0,
     total: 0,
     recent: [],
@@ -682,6 +686,7 @@ function submitAnswer(selectedKey, selectedButton) {
 }
 
 function adjustLevel() {
+  if (state.difficultyMode !== "auto") return;
   if (state.total < 10 || state.total === state.lastLevelWindow) return;
   const recentCorrect = state.recent.filter(Boolean).length;
   const previousLevel = state.level;
@@ -721,6 +726,13 @@ function renderAllStats() {
     : "0%";
   elements.guideTitle.textContent = `Level ${state.level}`;
   elements.guideDescription.textContent = LEVELS[state.level].description;
+  elements.difficultySelect.value = state.difficultyMode;
+  const isAuto = state.difficultyMode === "auto";
+  elements.difficultyMode.textContent = isAuto ? "Auto" : "Manual";
+  elements.difficultyMode.classList.toggle("manual", !isAuto);
+  elements.difficultyHelp.textContent = isAuto
+    ? "Auto changes level from your latest 10 answers."
+    : `Locked to Level ${state.level}. Choose Auto to resume adaptive difficulty.`;
   renderRecent();
   renderWeakAreas();
   renderLevelTrack();
@@ -744,9 +756,11 @@ function renderRecent() {
     "aria-label",
     `${count} correct from the latest ${state.recent.length} answers`
   );
-  elements.recentText.textContent = state.recent.length < 10
-    ? `${10 - state.recent.length} more ${10 - state.recent.length === 1 ? "answer" : "answers"} before level review`
-    : `${count} correct in the latest 10`;
+  elements.recentText.textContent = state.difficultyMode !== "auto"
+    ? `Manual mode — Level ${state.level} stays fixed`
+    : state.recent.length < 10
+      ? `${10 - state.recent.length} more ${10 - state.recent.length === 1 ? "answer" : "answers"} before level review`
+      : `${count} correct in the latest 10`;
 }
 
 function renderWeakAreas() {
@@ -793,8 +807,25 @@ function renderLevelTrack() {
 }
 
 function resetSession() {
+  const selectedMode = state.difficultyMode;
+  const selectedLevel = state.level;
   state = createInitialState();
+  state.difficultyMode = selectedMode;
+  if (selectedMode !== "auto") state.level = selectedLevel;
   showQuestion();
+}
+
+function changeDifficulty(event) {
+  const selected = event.target.value;
+  state.difficultyMode = selected;
+
+  if (selected !== "auto") {
+    state.level = Number(selected);
+  }
+
+  state.answered = false;
+  showQuestion();
+  elements.questionText.focus();
 }
 
 function runSelfTests(iterations = 250) {
@@ -856,6 +887,14 @@ function runSelfTests(iterations = 250) {
     adjustLevel();
     if (state.level !== 6) throw new Error("Upper level boundary failed.");
 
+    state.level = 6;
+    state.difficultyMode = "6";
+    state.total = 30;
+    state.lastLevelWindow = 20;
+    state.recent = Array(10).fill(false);
+    adjustLevel();
+    if (state.level !== 6) throw new Error("Manual level lock failed.");
+
     report.push("Math invariants and adaptive boundaries: valid");
     return report;
   } finally {
@@ -864,6 +903,7 @@ function runSelfTests(iterations = 250) {
 }
 
 elements.nextButton.addEventListener("click", showQuestion);
+elements.difficultySelect.addEventListener("change", changeDifficulty);
 elements.resetButton.addEventListener("click", resetSession);
 
 window.Trigwise = {

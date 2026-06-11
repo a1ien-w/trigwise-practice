@@ -68,6 +68,29 @@
       </section>
 
       <aside class="side-panel" aria-label="Learning insights">
+        <section class="insight-card difficulty-card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Practice mode</p>
+              <h2>Choose difficulty</h2>
+            </div>
+            <span id="difficultyMode" class="mode-badge">Auto</span>
+          </div>
+          <label for="difficultySelect">Question level</label>
+          <select id="difficultySelect">
+            <option value="auto">Auto — adapts to you</option>
+            <option value="1">Level 1 — First quadrant</option>
+            <option value="2">Level 2 — Semicircle</option>
+            <option value="3">Level 3 — Full circle</option>
+            <option value="4">Level 4 — Negative angles</option>
+            <option value="5">Level 5 — Inverse trig</option>
+            <option value="6">Level 6 — Trig equations</option>
+          </select>
+          <p id="difficultyHelp" class="control-help">
+            Auto changes level from your latest 10 answers.
+          </p>
+        </section>
+
         <section class="insight-card">
           <div class="section-heading">
             <div>

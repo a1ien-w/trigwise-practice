@@ -34,6 +34,10 @@ button {
   font: inherit;
 }
 
+select {
+  font: inherit;
+}
+
 .app-shell {
   width: min(1160px, calc(100% - 40px));
   margin: 0 auto;
@@ -404,6 +408,58 @@ h1 {
 .side-panel {
   display: grid;
   gap: 14px;
+}
+
+.difficulty-card label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.03em;
+}
+
+.difficulty-card select {
+  width: 100%;
+  min-height: 45px;
+  padding: 0 38px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.difficulty-card select:hover {
+  border-color: var(--green);
+}
+
+.difficulty-card select:focus-visible {
+  outline: 3px solid rgba(208, 138, 34, 0.4);
+  outline-offset: 3px;
+}
+
+.mode-badge {
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: var(--green-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mode-badge.manual {
+  color: #80500c;
+  background: var(--amber-soft);
+}
+
+.control-help {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 .insight-card {
