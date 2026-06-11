@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adaptive exact-value trigonometry practice for AS and A-Level students.">
+  <title>Trigwise | Exact Trig Practice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">AS / A-Level practice</p>
+        <h1>Trigwise</h1>
+        <p class="hero-copy">Build unit-circle fluency, one exact answer at a time.</p>
+      </div>
+      <div class="level-badge" aria-label="Current difficulty">
+        <span>Level</span>
+        <strong id="levelValue">1</strong>
+        <small id="levelName">First quadrant</small>
+      </div>
+    </header>
+
+    <section class="dashboard" aria-label="Session statistics">
+      <article class="stat-card">
+        <span>Score</span>
+        <strong id="scoreValue">0 / 0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Accuracy</span>
+        <strong id="accuracyValue">0%</strong>
+      </article>
+      <article class="stat-card stat-wide">
+        <span>Recent performance</span>
+        <div id="recentDots" class="recent-dots" aria-label="No recent answers yet"></div>
+        <small id="recentText">Answer 10 questions to unlock level changes</small>
+      </article>
+    </section>
+
+    <div class="content-grid">
+      <section class="question-card" aria-labelledby="questionText">
+        <div class="question-topline">
+          <span id="questionType" class="topic-pill">Exact value</span>
+          <span id="questionNumber">Question 1</span>
+        </div>
+
+        <h2 id="questionText" tabindex="-1">Loading question...</h2>
+        <p id="questionHint" class="question-hint"></p>
+
+        <div id="answerGrid" class="answer-grid" role="group" aria-label="Answer choices"></div>
+
+        <div id="feedbackPanel" class="feedback-panel" hidden aria-live="polite">
+          <div class="feedback-heading">
+            <span id="feedbackIcon" class="feedback-icon" aria-hidden="true"></span>
+            <div>
+              <h3 id="feedbackTitle"></h3>
+              <p id="feedbackAnswer"></p>
+            </div>
+          </div>
+          <p id="explanationText" class="explanation"></p>
+        </div>
+
+        <button id="nextButton" class="primary-button" type="button" disabled>
+          Next question
+          <span aria-hidden="true">→</span>
+        </button>
+      </section>
+
+      <aside class="side-panel" aria-label="Learning insights">
+        <section class="insight-card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Adaptive focus</p>
+              <h2>Weak areas</h2>
+            </div>
+            <span class="pulse-dot" aria-hidden="true"></span>
+          </div>
+          <div id="weakAreas" class="weak-areas">
+            <p class="empty-state">Complete a few questions and your focus areas will appear here.</p>
+          </div>
+        </section>
+
+        <section class="insight-card level-guide">
+          <p class="eyebrow">Current syllabus</p>
+          <h2 id="guideTitle">Level 1</h2>
+          <p id="guideDescription">First-quadrant exact values for standard angles.</p>
+          <div class="level-track" aria-hidden="true">
+            <span class="active"></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+        </section>
+
+        <button id="resetButton" class="text-button" type="button">Reset session</button>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <p>Exact values only. No calculators required.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
